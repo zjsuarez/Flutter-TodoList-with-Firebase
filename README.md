@@ -28,4 +28,14 @@ Each feature is completely encapsulated, containing its own isolated layers:
 
 ## 📚 Learning Resources & References
 
-* Hive Tutorial: https://ms3byoussef.medium.com/hive-in-flutter-a-detailed-guide-with-injectable-freezed-and-cubit-in-clean-architecture-c5c12ce8e00c
+* Hive Tutorial: 
+https://ms3byoussef.medium.com/hive-in-flutter-a-detailed-guide-with-injectable-freezed-and-cubit-in-clean-architecture-c5c12ce8e00c
+
+* GetIt and Injectable Tutorial: 
+https://ahmdsufyan.medium.com/dependency-injection-flutter-get-it-injectable-61acf676684e
+
+* Firebase Tutorial: 
+https://firebase.google.com/docs/flutter/setup?platform=ios
+
+* BLoC:
+I already learnt BLoC with previous projects.
