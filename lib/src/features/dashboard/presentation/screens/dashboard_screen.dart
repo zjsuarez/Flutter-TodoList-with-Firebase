@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../domain/entities/task.dart';
 import '../bloc/dashboard/bloc/dashboard_bloc.dart';
+import '../widgets/add_task_bottom_sheet.dart';
 import '../widgets/filter_chip_widget.dart';
 import '../widgets/task_tile.dart';
 
@@ -166,15 +167,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       const Spacer(),
                       GestureDetector(
                         onTap: () {
-                          // Dummy trigger to test the Add Functionality
-                          final dummyTask = Task(
-                            id: DateTime.now().millisecondsSinceEpoch.toString(),
-                            title: 'New generated task',
-                            description: 'A test task from the + button',
-                            date: DateTime.now(),
-                            isCompleted: false,
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true, // required so the keyboard doesn't cover the sheet
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                            ),
+                            builder: (ctx) {
+                              return AddTaskBottomSheet(
+                                onAdd: (newTask) {
+                                  context.read<DashboardBloc>().add(DashboardEvent.addTask(newTask));
+                                },
+                              );
+                            },
                           );
-                          context.read<DashboardBloc>().add(DashboardEvent.addTask(dummyTask));
                         },
                         child: Container(
                           width: 46,
