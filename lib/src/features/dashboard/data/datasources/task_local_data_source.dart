@@ -16,7 +16,7 @@ class TaskLocalDataSource {
     return _TaskBox.values.toList();
   }
 
-  Future<void> deleteTask(int index) async {
-    await _TaskBox.deleteAt(index);
+  Future<void> deleteTask(String id) async {
+    await _TaskBox.delete(id);
   }
 }

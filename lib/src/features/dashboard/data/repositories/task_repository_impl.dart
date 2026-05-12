@@ -18,14 +18,13 @@ class TaskRepositoryImpl implements TaskRepository{
 
   @override
   Future<void> deleteTask(String id) {
-    // TODO: implement deleteTask
-    throw UnimplementedError();
+    taskLocalDataSource.deleteTask(id);
+    return Future.value();
   }
 
   @override
   Future<List<Task>> getTasks() {
-    // TODO: implement getTasks
-    throw UnimplementedError();
+    return Future.value(taskLocalDataSource.getTasks());
   }
 
   @override
