@@ -11,25 +11,22 @@ class TaskRepositoryImpl implements TaskRepository{
   TaskRepositoryImpl(this.taskLocalDataSource);
 
   @override
-  Future<void> addTask(Task task) {
-    taskLocalDataSource.saveTask(task);
-    return Future.value();
+  Future<void> addTask(Task task) async {
+    await taskLocalDataSource.saveTask(task);
   }
 
   @override
-  Future<void> deleteTask(String id) {
-    taskLocalDataSource.deleteTask(id);
-    return Future.value();
+  Future<void> deleteTask(String id) async {
+    await taskLocalDataSource.deleteTask(id);
   }
 
   @override
-  Future<List<Task>> getTasks() {
-    return Future.value(taskLocalDataSource.getTasks());
+  Future<List<Task>> getTasks() async {
+    return taskLocalDataSource.getTasks();
   }
 
   @override
-  Future<void> updateTask(Task task) {
-    taskLocalDataSource.saveTask(task);
-    return Future.value();
+  Future<void> updateTask(Task task) async {
+    await taskLocalDataSource.saveTask(task);
   }
 }
