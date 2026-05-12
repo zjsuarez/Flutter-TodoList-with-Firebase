@@ -1,7 +1,9 @@
 import 'package:todolistfirebase/src/features/dashboard/data/datasources/task_local_data_source.dart';
 import 'package:todolistfirebase/src/features/dashboard/domain/entities/task.dart';
 import 'package:todolistfirebase/src/features/dashboard/domain/repositories/task_repository.dart';
+import 'package:injectable/injectable.dart';
 
+@LazySingleton(as: TaskRepository)
 class TaskRepositoryImpl implements TaskRepository{
 
   final TaskLocalDataSource taskLocalDataSource;
