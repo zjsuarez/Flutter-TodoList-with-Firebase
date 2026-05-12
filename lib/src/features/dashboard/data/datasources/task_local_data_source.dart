@@ -1,22 +1,23 @@
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 import 'package:todolistfirebase/src/features/dashboard/domain/entities/task.dart';
+import 'package:todolistfirebase/src/features/dashboard/data/model/task_model.dart';
 
 @lazySingleton
 class TaskLocalDataSource {
-  final Box<Task> _TaskBox;
+  final Box<TaskModel> _taskBox;
 
-  TaskLocalDataSource(this._TaskBox);
+  TaskLocalDataSource(this._taskBox);
 
   Future<void> saveTask(Task task) async {
-    await _TaskBox.add(task);
+    await _taskBox.put(task.id, TaskModel.fromDomain(task));
   }
 
   List<Task> getTasks() {
-    return _TaskBox.values.toList();
+    return _taskBox.values.map((model) => model.toDomain()).toList();
   }
 
   Future<void> deleteTask(String id) async {
-    await _TaskBox.delete(id);
+    await _taskBox.delete(id);
   }
 }

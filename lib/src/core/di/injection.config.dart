@@ -14,10 +14,10 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:todolistfirebase/src/core/di/injection.dart' as _i257;
 import 'package:todolistfirebase/src/features/dashboard/data/datasources/task_local_data_source.dart'
     as _i571;
+import 'package:todolistfirebase/src/features/dashboard/data/model/task_model.dart'
+    as _i899;
 import 'package:todolistfirebase/src/features/dashboard/data/repositories/task_repository_impl.dart'
     as _i329;
-import 'package:todolistfirebase/src/features/dashboard/domain/entities/task.dart'
-    as _i39;
 import 'package:todolistfirebase/src/features/dashboard/domain/repositories/task_repository.dart'
     as _i812;
 import 'package:todolistfirebase/src/features/dashboard/domain/usecases/add_task_usecase.dart'
@@ -43,9 +43,9 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final registerModule = _$RegisterModule();
-    gh.lazySingleton<_i979.Box<_i39.Task>>(() => registerModule.taskBox);
+    gh.lazySingleton<_i979.Box<_i899.TaskModel>>(() => registerModule.taskBox);
     gh.lazySingleton<_i571.TaskLocalDataSource>(
-        () => _i571.TaskLocalDataSource(gh<_i979.Box<_i39.Task>>()));
+        () => _i571.TaskLocalDataSource(gh<_i979.Box<_i899.TaskModel>>()));
     gh.lazySingleton<_i812.TaskRepository>(
         () => _i329.TaskRepositoryImpl(gh<_i571.TaskLocalDataSource>()));
     gh.lazySingleton<_i68.AddTaskUseCase>(

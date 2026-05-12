@@ -9,7 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(TaskAdapter());
-  await Hive.openBox<Task>('tasksBox');
+  await Hive.openBox<TaskModel>('tasksBox');
   configureInjection();
 
   runApp(const MainApp());

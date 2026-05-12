@@ -29,7 +29,7 @@ class TaskRepositoryImpl implements TaskRepository{
 
   @override
   Future<void> updateTask(Task task) {
-    // TODO: implement updateTask
-    throw UnimplementedError();
+    taskLocalDataSource.saveTask(task);
+    return Future.value();
   }
 }
