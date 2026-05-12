@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../widgets/filter_chip_widget.dart';
+import '../widgets/task_tile.dart';
+
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
@@ -102,7 +105,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 }
                 final index = i ~/ 2;
                 final task = _tasks[index];
-                return _TaskTile(
+                return TaskTileWidget(
                   title: task['title'] as String,
                   description: task['description'] as String,
                   dateTime: task['date'] as String,
@@ -134,17 +137,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     padding: const EdgeInsets.all(3),
                     child: Row(
                       children: [
-                        _FilterChip(
+                        FilterChipWidget(
                           label: 'Today',
                           selected: _selectedFilter == 0,
                           onTap: () => setState(() => _selectedFilter = 0),
                         ),
-                        _FilterChip(
+                        FilterChipWidget(
                           label: 'This Week',
                           selected: _selectedFilter == 1,
                           onTap: () => setState(() => _selectedFilter = 1),
                         ),
-                        _FilterChip(
+                        FilterChipWidget(
                           label: 'All',
                           selected: _selectedFilter == 2,
                           onTap: () => setState(() => _selectedFilter = 2),
@@ -175,129 +178,3 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 }
 
-class _TaskTile extends StatelessWidget {
-  final String title;
-  final String description;
-  final String dateTime;
-  final bool done;
-  final VoidCallback onToggle;
-
-  const _TaskTile({
-    required this.title,
-    required this.description,
-    required this.dateTime,
-    required this.done,
-    required this.onToggle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          GestureDetector(
-            onTap: onToggle,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 180),
-              width: 24,
-              height: 24,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: done ? Colors.black : const Color(0xFFBBBBBB),
-                  width: 2,
-                ),
-                color: done ? Colors.black : Colors.transparent,
-              ),
-              child: done
-                  ? const Icon(Icons.check, size: 13, color: Colors.white)
-                  : null,
-            ),
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: done ? Colors.black38 : Colors.black87,
-                    decoration: done ? TextDecoration.lineThrough : null,
-                    decorationColor: Colors.black38,
-                  ),
-                ),
-                const SizedBox(height: 3),
-                Text(
-                  description,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Colors.black38,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              const Icon(
-                Icons.arrow_forward_ios,
-                size: 15,
-                color: Colors.black38,
-              ),
-              const SizedBox(height: 5),
-              Text(
-                dateTime,
-                style: const TextStyle(
-                  fontSize: 11,
-                  color: Colors.black38,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _FilterChip extends StatelessWidget {
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  const _FilterChip({
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-        decoration: BoxDecoration(
-          color: selected ? Colors.black : Colors.transparent,
-          borderRadius: BorderRadius.circular(19),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.w500,
-            color: selected ? Colors.white : Colors.black45,
-          ),
-        ),
-      ),
-    );
-  }
-}
