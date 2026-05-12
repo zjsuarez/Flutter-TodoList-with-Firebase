@@ -16,6 +16,16 @@ import 'package:todolistfirebase/src/features/dashboard/data/datasources/task_lo
     as _i571;
 import 'package:todolistfirebase/src/features/dashboard/domain/entities/task.dart'
     as _i39;
+import 'package:todolistfirebase/src/features/dashboard/domain/repositories/task_repository.dart'
+    as _i812;
+import 'package:todolistfirebase/src/features/dashboard/domain/usecases/add_task_usecase.dart'
+    as _i68;
+import 'package:todolistfirebase/src/features/dashboard/domain/usecases/delete_task_usecase.dart'
+    as _i677;
+import 'package:todolistfirebase/src/features/dashboard/domain/usecases/get_tasks_usecase.dart'
+    as _i643;
+import 'package:todolistfirebase/src/features/dashboard/domain/usecases/update_task_usecase.dart'
+    as _i692;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -32,6 +42,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i979.Box<_i39.Task>>(() => registerModule.taskBox);
     gh.lazySingleton<_i571.TaskLocalDataSource>(
         () => _i571.TaskLocalDataSource(gh<_i979.Box<_i39.Task>>()));
+    gh.lazySingleton<_i68.AddTaskUseCase>(
+        () => _i68.AddTaskUseCase(gh<_i812.TaskRepository>()));
+    gh.lazySingleton<_i677.DeleteTaskUseCase>(
+        () => _i677.DeleteTaskUseCase(gh<_i812.TaskRepository>()));
+    gh.lazySingleton<_i643.GetTasksUseCase>(
+        () => _i643.GetTasksUseCase(gh<_i812.TaskRepository>()));
+    gh.lazySingleton<_i692.UpdateTaskUseCase>(
+        () => _i692.UpdateTaskUseCase(gh<_i812.TaskRepository>()));
     return this;
   }
 }
