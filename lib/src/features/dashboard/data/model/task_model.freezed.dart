@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'task.dart';
+part of 'task_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-Task _$TaskFromJson(Map<String, dynamic> json) {
-  return _Task.fromJson(json);
+TaskModel _$TaskModelFromJson(Map<String, dynamic> json) {
+  return _TaskModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Task {
+mixin _$TaskModel {
   @HiveField(0)
   String get id => throw _privateConstructorUsedError;
   @HiveField(1)
@@ -33,13 +33,14 @@ mixin _$Task {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $TaskCopyWith<Task> get copyWith => throw _privateConstructorUsedError;
+  $TaskModelCopyWith<TaskModel> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TaskCopyWith<$Res> {
-  factory $TaskCopyWith(Task value, $Res Function(Task) then) =
-      _$TaskCopyWithImpl<$Res, Task>;
+abstract class $TaskModelCopyWith<$Res> {
+  factory $TaskModelCopyWith(TaskModel value, $Res Function(TaskModel) then) =
+      _$TaskModelCopyWithImpl<$Res, TaskModel>;
   @useResult
   $Res call(
       {@HiveField(0) String id,
@@ -50,9 +51,9 @@ abstract class $TaskCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TaskCopyWithImpl<$Res, $Val extends Task>
-    implements $TaskCopyWith<$Res> {
-  _$TaskCopyWithImpl(this._value, this._then);
+class _$TaskModelCopyWithImpl<$Res, $Val extends TaskModel>
+    implements $TaskModelCopyWith<$Res> {
+  _$TaskModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -94,10 +95,11 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
 }
 
 /// @nodoc
-abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
-  factory _$$TaskImplCopyWith(
-          _$TaskImpl value, $Res Function(_$TaskImpl) then) =
-      __$$TaskImplCopyWithImpl<$Res>;
+abstract class _$$TaskModelImplCopyWith<$Res>
+    implements $TaskModelCopyWith<$Res> {
+  factory _$$TaskModelImplCopyWith(
+          _$TaskModelImpl value, $Res Function(_$TaskModelImpl) then) =
+      __$$TaskModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -109,10 +111,11 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$TaskImplCopyWithImpl<$Res>
-    extends _$TaskCopyWithImpl<$Res, _$TaskImpl>
-    implements _$$TaskImplCopyWith<$Res> {
-  __$$TaskImplCopyWithImpl(_$TaskImpl _value, $Res Function(_$TaskImpl) _then)
+class __$$TaskModelImplCopyWithImpl<$Res>
+    extends _$TaskModelCopyWithImpl<$Res, _$TaskModelImpl>
+    implements _$$TaskModelImplCopyWith<$Res> {
+  __$$TaskModelImplCopyWithImpl(
+      _$TaskModelImpl _value, $Res Function(_$TaskModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -124,7 +127,7 @@ class __$$TaskImplCopyWithImpl<$Res>
     Object? isCompleted = null,
     Object? date = null,
   }) {
-    return _then(_$TaskImpl(
+    return _then(_$TaskModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -152,16 +155,17 @@ class __$$TaskImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 @HiveType(typeId: 0, adapterName: 'TaskAdapter')
-class _$TaskImpl implements _Task {
-  const _$TaskImpl(
+class _$TaskModelImpl extends _TaskModel {
+  const _$TaskModelImpl(
       {@HiveField(0) required this.id,
       @HiveField(1) required this.title,
       @HiveField(2) required this.description,
       @HiveField(3) required this.isCompleted,
-      @HiveField(4) required this.date});
+      @HiveField(4) required this.date})
+      : super._();
 
-  factory _$TaskImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TaskImplFromJson(json);
+  factory _$TaskModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TaskModelImplFromJson(json);
 
   @override
   @HiveField(0)
@@ -181,14 +185,14 @@ class _$TaskImpl implements _Task {
 
   @override
   String toString() {
-    return 'Task(id: $id, title: $title, description: $description, isCompleted: $isCompleted, date: $date)';
+    return 'TaskModel(id: $id, title: $title, description: $description, isCompleted: $isCompleted, date: $date)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TaskImpl &&
+            other is _$TaskModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
@@ -206,26 +210,28 @@ class _$TaskImpl implements _Task {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$TaskImplCopyWith<_$TaskImpl> get copyWith =>
-      __$$TaskImplCopyWithImpl<_$TaskImpl>(this, _$identity);
+  _$$TaskModelImplCopyWith<_$TaskModelImpl> get copyWith =>
+      __$$TaskModelImplCopyWithImpl<_$TaskModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TaskImplToJson(
+    return _$$TaskModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _Task implements Task {
-  const factory _Task(
+abstract class _TaskModel extends TaskModel {
+  const factory _TaskModel(
       {@HiveField(0) required final String id,
       @HiveField(1) required final String title,
       @HiveField(2) required final String description,
       @HiveField(3) required final bool isCompleted,
-      @HiveField(4) required final DateTime date}) = _$TaskImpl;
+      @HiveField(4) required final DateTime date}) = _$TaskModelImpl;
+  const _TaskModel._() : super._();
 
-  factory _Task.fromJson(Map<String, dynamic> json) = _$TaskImpl.fromJson;
+  factory _TaskModel.fromJson(Map<String, dynamic> json) =
+      _$TaskModelImpl.fromJson;
 
   @override
   @HiveField(0)
@@ -244,6 +250,6 @@ abstract class _Task implements Task {
   DateTime get date;
   @override
   @JsonKey(ignore: true)
-  _$$TaskImplCopyWith<_$TaskImpl> get copyWith =>
+  _$$TaskModelImplCopyWith<_$TaskModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

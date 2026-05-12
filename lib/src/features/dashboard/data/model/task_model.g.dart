@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'task.dart';
+part of 'task_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class TaskAdapter extends TypeAdapter<_$TaskImpl> {
+class TaskAdapter extends TypeAdapter<_$TaskModelImpl> {
   @override
   final int typeId = 0;
 
   @override
-  _$TaskImpl read(BinaryReader reader) {
+  _$TaskModelImpl read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$TaskImpl(
+    return _$TaskModelImpl(
       id: fields[0] as String,
       title: fields[1] as String,
       description: fields[2] as String,
@@ -26,7 +26,7 @@ class TaskAdapter extends TypeAdapter<_$TaskImpl> {
   }
 
   @override
-  void write(BinaryWriter writer, _$TaskImpl obj) {
+  void write(BinaryWriter writer, _$TaskModelImpl obj) {
     writer
       ..writeByte(5)
       ..writeByte(0)
@@ -56,7 +56,8 @@ class TaskAdapter extends TypeAdapter<_$TaskImpl> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
+_$TaskModelImpl _$$TaskModelImplFromJson(Map<String, dynamic> json) =>
+    _$TaskModelImpl(
       id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
@@ -64,7 +65,7 @@ _$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
       date: DateTime.parse(json['date'] as String),
     );
 
-Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>
+Map<String, dynamic> _$$TaskModelImplToJson(_$TaskModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
