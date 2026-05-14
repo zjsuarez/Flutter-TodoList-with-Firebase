@@ -35,7 +35,7 @@ https://ms3byoussef.medium.com/hive-in-flutter-a-detailed-guide-with-injectable-
 https://ahmdsufyan.medium.com/dependency-injection-flutter-get-it-injectable-61acf676684e
 
 * Firebase Tutorial: 
-https://firebase.google.com/docs/flutter/setup?platform=ios
+https://firebase.google.com/docs/firestore/quickstart#dart_1
 
 * BLoC:
 I already learnt BLoC with previous projects.

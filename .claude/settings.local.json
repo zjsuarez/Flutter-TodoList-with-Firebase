@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(flutter pub *)"
+      "Bash(flutter pub *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\works\\\\Desktop\\\\New folder \\(2\\)\\\\flutterprojects\\\\Todo-List FireBase\\\\todolistfirebase\" -Recurse -Directory)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "PowerShell(head *)"
     ]
   }
 }

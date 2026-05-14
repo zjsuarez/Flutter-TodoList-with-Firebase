@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+
 import 'package:todolistfirebase/src/core/di/injection.dart';
 import 'package:todolistfirebase/src/core/router/app_router.dart';
+
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 import 'package:todolistfirebase/src/features/dashboard/data/model/task_model.dart';
 import 'package:todolistfirebase/src/features/dashboard/domain/entities/task.dart';
 
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await Hive.initFlutter();
   Hive.registerAdapter(TaskAdapter());
   await Hive.openBox<TaskModel>('tasksBox');
