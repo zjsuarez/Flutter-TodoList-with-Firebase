@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:todolistfirebase/src/core/di/injection.dart';
 import 'package:todolistfirebase/src/core/router/app_router.dart';
+import 'package:todolistfirebase/src/features/auth/presentation/bloc/auth_bloc.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -33,8 +35,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: appRouter,
+    return BlocProvider(
+      create: (_) => getIt<AuthBloc>(),
+      child: MaterialApp.router(
+        routerConfig: appRouter,
+      ),
     );
   }
 }

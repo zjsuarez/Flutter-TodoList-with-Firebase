@@ -1,9 +1,6 @@
 abstract class AuthRepository {
-  Future<void> signInWithGoogle() async {
-    // Implement Google Sign-In logic here
-  }
-
-  Future<void> signOut() async {
-    // Implement Sign-Out logic here
-  }
+  bool get isLoggedIn;
+  Future<void> signIn(String email, String password);
+  Future<void> register(String email, String password);
+  Future<void> signOut();
 }

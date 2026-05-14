@@ -26,7 +26,6 @@ Future<UserCredential> login(String email, String password) async {
     await _firebaseAuth.signOut();
   }
 
-  // Para saber si el usuario ya inició sesión al abrir la app
   User? get currentUser => _firebaseAuth.currentUser;
 
 }

@@ -1,34 +1,28 @@
+import 'package:injectable/injectable.dart';
 import 'package:todolistfirebase/src/features/auth/data/data/auth_datasource.dart';
 import 'package:todolistfirebase/src/features/auth/domain/repositories/auth_repository.dart';
 
+@LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   final AuthDataSource _authDataSource;
 
   AuthRepositoryImpl(this._authDataSource);
 
   @override
-  Future<bool> signIn(String email, String password) async {
-    try {
-      final user = await _authDataSource.login(email, password);
-      return true;
-    } catch (e) {
-      return false;
-    }
+  bool get isLoggedIn => _authDataSource.currentUser != null;
+
+  @override
+  Future<void> signIn(String email, String password) async {
+    await _authDataSource.login(email, password);
   }
 
   @override
-  Future<bool> signOut() async {
-    try {
-      await _authDataSource.logout();
-      return true;
-    } catch (e) {
-      return false;
-    }
+  Future<void> register(String email, String password) async {
+    await _authDataSource.register(email, password);
   }
-  
+
   @override
-  Future<void> signInWithGoogle() {
-    // TODO: implement signInWithGoogle
-    throw UnimplementedError();
+  Future<void> signOut() async {
+    await _authDataSource.logout();
   }
 }

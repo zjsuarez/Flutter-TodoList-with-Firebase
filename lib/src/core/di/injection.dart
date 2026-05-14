@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 import 'package:get_it/get_it.dart';
@@ -13,4 +14,7 @@ void configureInjection() => getIt.init();
 abstract class RegisterModule {
   @lazySingleton
   Box<TaskModel> get taskBox => Hive.box<TaskModel>('tasksBox');
+
+  @lazySingleton
+  FirebaseAuth get firebaseAuth => FirebaseAuth.instance;
 }
