@@ -40,7 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         state.whenOrNull(
-          authenticated: () => context.go('/dashboard'),
+          authenticated: () => context.go('/onboarding'),
           error: (message) => ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(message), backgroundColor: Colors.red),
           ),
