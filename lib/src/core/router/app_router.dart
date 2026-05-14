@@ -7,7 +7,7 @@ import 'package:todolistfirebase/src/features/auth/presentation/screen/startpage
 import 'package:todolistfirebase/src/features/dashboard/presentation/bloc/dashboard/bloc/dashboard_bloc.dart';
 import 'package:todolistfirebase/src/features/dashboard/presentation/screens/dashboard_screen.dart';
 
-final approuter = GoRouter(
+final appRouter = GoRouter(
   routes: [
     GoRoute(path: '/', builder: (context, state) => const StartPageScreen(),),
     GoRoute(path: '/login', builder: (context, state) => const LoginScreen(),),

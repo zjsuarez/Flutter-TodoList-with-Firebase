@@ -1,3 +1,3 @@
 class AppColors {
-    static const backgroundcolor = 0xFFFDFDFD;
+    static const backgroundColor = 0xFFFDFDFD;
 }

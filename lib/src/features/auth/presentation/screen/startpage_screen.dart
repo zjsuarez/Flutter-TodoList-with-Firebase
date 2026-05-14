@@ -10,7 +10,7 @@ class StartPageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(AppColors.backgroundcolor),
+      backgroundColor: Color(AppColors.backgroundColor),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

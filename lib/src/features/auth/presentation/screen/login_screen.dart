@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(AppColors.backgroundcolor),
+      backgroundColor: const Color(AppColors.backgroundColor),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Center(
