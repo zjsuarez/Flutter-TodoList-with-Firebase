@@ -14,12 +14,15 @@ import 'package:todolistfirebase/src/features/dashboard/domain/entities/task.dar
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //Firebase initialization
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // Hive initialization
   await Hive.initFlutter();
   Hive.registerAdapter(TaskAdapter());
   await Hive.openBox<TaskModel>('tasksBox');
+  //GetIt configuration initialization
   configureInjection();
 
   runApp(const MainApp());

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todolistfirebase/src/core/constants/app_colors.dart';
+import 'package:todolistfirebase/src/core/utils/validators.dart';
 import 'package:todolistfirebase/src/features/auth/presentation/widgets/auth_widgets.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -68,24 +69,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: AuthWidgets().fieldDecoration(hint: 'Email'),
-                  validator: (value) {
-                    if (value == null || !value.contains('@')) {
-                      return 'Enter a valid email';
-                    }
-                    return null;
-                  },
+                  validator: validateEmail,
                 ),
                 const SizedBox(height: 14),
                 TextFormField(
                   controller: _passwordController,
                   obscureText: true,
                   decoration: AuthWidgets().fieldDecoration(hint: 'Password'),
-                  validator: (value) {
-                    if (value == null || value.length < 6) {
-                      return 'At least 6 characters';
-                    }
-                    return null;
-                  },
+                  validator: validatePassword,
                 ),
                 const SizedBox(height: 14),
                 TextFormField(
@@ -95,9 +86,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     hint: 'Confirm Password',
                   ),
                   validator: (value) {
-                    if (value == null || value.length < 6) {
-                      return 'At least 6 characters';
-                    }
+                    final err = validatePassword(value);
+                    if (err != null) return err;
+                    if (value != _passwordController.text) return 'Passwords do not match';
                     return null;
                   },
                 ),
