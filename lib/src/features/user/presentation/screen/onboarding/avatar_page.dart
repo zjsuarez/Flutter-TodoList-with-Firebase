@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:todolistfirebase/src/features/auth/presentation/widgets/onboarding/step_shell.dart';
+import 'package:todolistfirebase/src/features/user/presentation/widgets/onboarding/step_shell.dart';
 
 const avatarColors = [
   Color(0xFF1A1A2E),

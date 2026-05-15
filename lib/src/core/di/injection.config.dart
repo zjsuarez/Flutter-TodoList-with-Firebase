@@ -19,6 +19,12 @@ import 'package:todolistfirebase/src/features/auth/data/repositories/auth_reposi
     as _i545;
 import 'package:todolistfirebase/src/features/auth/domain/repositories/auth_repository.dart'
     as _i961;
+import 'package:todolistfirebase/src/features/auth/domain/usecases/register_usecase.dart'
+    as _i978;
+import 'package:todolistfirebase/src/features/auth/domain/usecases/sign_in_usecase.dart'
+    as _i876;
+import 'package:todolistfirebase/src/features/auth/domain/usecases/sign_out_usecase.dart'
+    as _i797;
 import 'package:todolistfirebase/src/features/auth/presentation/bloc/auth_bloc.dart'
     as _i817;
 import 'package:todolistfirebase/src/features/dashboard/data/datasources/task_local_data_source.dart'
@@ -76,8 +82,17 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i692.UpdateTaskUseCase>(),
           gh<_i677.DeleteTaskUseCase>(),
         ));
-    gh.factory<_i817.AuthBloc>(
-        () => _i817.AuthBloc(gh<_i961.AuthRepository>()));
+    gh.factory<_i978.RegisterUseCase>(
+        () => _i978.RegisterUseCase(gh<_i961.AuthRepository>()));
+    gh.factory<_i876.SignInUseCase>(
+        () => _i876.SignInUseCase(gh<_i961.AuthRepository>()));
+    gh.factory<_i797.SignOutUseCase>(
+        () => _i797.SignOutUseCase(gh<_i961.AuthRepository>()));
+    gh.factory<_i817.AuthBloc>(() => _i817.AuthBloc(
+          gh<_i876.SignInUseCase>(),
+          gh<_i978.RegisterUseCase>(),
+          gh<_i797.SignOutUseCase>(),
+        ));
     return this;
   }
 }

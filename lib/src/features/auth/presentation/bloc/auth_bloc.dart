@@ -2,7 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:todolistfirebase/src/features/auth/domain/repositories/auth_repository.dart';
+import 'package:todolistfirebase/src/features/auth/domain/usecases/register_usecase.dart';
+import 'package:todolistfirebase/src/features/auth/domain/usecases/sign_in_usecase.dart';
+import 'package:todolistfirebase/src/features/auth/domain/usecases/sign_out_usecase.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -10,9 +12,12 @@ part 'auth_bloc.freezed.dart';
 
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthRepository _authRepository;
+  final SignInUseCase _signIn;
+  final RegisterUseCase _register;
+  final SignOutUseCase _signOut;
 
-  AuthBloc(this._authRepository) : super(const AuthState.initial()) {
+  AuthBloc(this._signIn, this._register, this._signOut)
+      : super(const AuthState.initial()) {
     on<_Login>(_onLogin);
     on<_Register>(_onRegister);
     on<_Logout>(_onLogout);
@@ -21,7 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onLogin(_Login event, Emitter<AuthState> emit) async {
     emit(const AuthState.loading());
     try {
-      await _authRepository.signIn(event.email, event.password);
+      await _signIn(event.email, event.password);
       emit(const AuthState.authenticated());
     } on FirebaseAuthException catch (e) {
       emit(AuthState.error(_mapFirebaseError(e)));
@@ -33,7 +38,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onRegister(_Register event, Emitter<AuthState> emit) async {
     emit(const AuthState.loading());
     try {
-      await _authRepository.register(event.email, event.password);
+      await _register(event.email, event.password);
       emit(const AuthState.authenticated());
     } on FirebaseAuthException catch (e) {
       emit(AuthState.error(_mapFirebaseError(e)));
@@ -43,7 +48,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onLogout(_Logout event, Emitter<AuthState> emit) async {
-    await _authRepository.signOut();
+    await _signOut();
     emit(const AuthState.unauthenticated());
   }
 

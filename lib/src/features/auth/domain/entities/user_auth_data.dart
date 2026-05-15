@@ -1,8 +1,8 @@
-class UserEntity {
+class UserAuthData {
   final String id;
   final String email;
 
-  UserEntity({
+  UserAuthData({
     required this.id,
     required this.email,
   });

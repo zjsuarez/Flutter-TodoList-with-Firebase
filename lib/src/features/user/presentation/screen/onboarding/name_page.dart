@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todolistfirebase/src/features/auth/presentation/widgets/onboarding/step_shell.dart';
+import 'package:todolistfirebase/src/features/user/presentation/widgets/onboarding/step_shell.dart';
 
 class NamePage extends StatelessWidget {
   const NamePage({
