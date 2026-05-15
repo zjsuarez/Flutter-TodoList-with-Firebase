@@ -7,6 +7,7 @@ import 'package:todolistfirebase/src/features/auth/presentation/bloc/auth_bloc.d
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:todolistfirebase/src/features/user/data/model/user_model.dart';
 import 'firebase_options.dart';
 
 import 'package:todolistfirebase/src/features/dashboard/data/model/task_model.dart';
@@ -24,6 +25,9 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(TaskAdapter());
   await Hive.openBox<TaskModel>('tasksBox');
+
+  Hive.registerAdapter(UserAdapter());
+  await Hive.openBox<UserModel>('userBox');
   //GetIt configuration initialization
   configureInjection();
 

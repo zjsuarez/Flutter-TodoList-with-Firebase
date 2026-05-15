@@ -13,8 +13,8 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:hive/hive.dart' as _i979;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:todolistfirebase/src/core/di/injection.dart' as _i257;
-import 'package:todolistfirebase/src/features/auth/data/data/auth_datasource.dart'
-    as _i977;
+import 'package:todolistfirebase/src/features/auth/data/datasources/auth_datasource.dart'
+    as _i688;
 import 'package:todolistfirebase/src/features/auth/data/repositories/auth_repository_impl.dart'
     as _i545;
 import 'package:todolistfirebase/src/features/auth/domain/repositories/auth_repository.dart'
@@ -62,12 +62,23 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i59.FirebaseAuth>(() => registerModule.firebaseAuth);
     gh.lazySingleton<_i571.TaskLocalDataSource>(
         () => _i571.TaskLocalDataSource(gh<_i979.Box<_i899.TaskModel>>()));
-    gh.lazySingleton<_i977.AuthDataSource>(
-        () => _i977.AuthDataSource(gh<_i59.FirebaseAuth>()));
+    gh.lazySingleton<_i961.AuthRepository>(
+        () => _i545.AuthRepositoryImpl(gh<InvalidType>()));
+    gh.lazySingleton<_i688.AuthDataSource>(
+        () => _i688.AuthDataSource(gh<_i59.FirebaseAuth>()));
     gh.lazySingleton<_i812.TaskRepository>(
         () => _i329.TaskRepositoryImpl(gh<_i571.TaskLocalDataSource>()));
-    gh.lazySingleton<_i961.AuthRepository>(
-        () => _i545.AuthRepositoryImpl(gh<_i977.AuthDataSource>()));
+    gh.factory<_i978.RegisterUseCase>(
+        () => _i978.RegisterUseCase(gh<_i961.AuthRepository>()));
+    gh.factory<_i876.SignInUseCase>(
+        () => _i876.SignInUseCase(gh<_i961.AuthRepository>()));
+    gh.factory<_i797.SignOutUseCase>(
+        () => _i797.SignOutUseCase(gh<_i961.AuthRepository>()));
+    gh.factory<_i817.AuthBloc>(() => _i817.AuthBloc(
+          gh<_i876.SignInUseCase>(),
+          gh<_i978.RegisterUseCase>(),
+          gh<_i797.SignOutUseCase>(),
+        ));
     gh.lazySingleton<_i68.AddTaskUseCase>(
         () => _i68.AddTaskUseCase(gh<_i812.TaskRepository>()));
     gh.lazySingleton<_i677.DeleteTaskUseCase>(
@@ -81,17 +92,6 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i68.AddTaskUseCase>(),
           gh<_i692.UpdateTaskUseCase>(),
           gh<_i677.DeleteTaskUseCase>(),
-        ));
-    gh.factory<_i978.RegisterUseCase>(
-        () => _i978.RegisterUseCase(gh<_i961.AuthRepository>()));
-    gh.factory<_i876.SignInUseCase>(
-        () => _i876.SignInUseCase(gh<_i961.AuthRepository>()));
-    gh.factory<_i797.SignOutUseCase>(
-        () => _i797.SignOutUseCase(gh<_i961.AuthRepository>()));
-    gh.factory<_i817.AuthBloc>(() => _i817.AuthBloc(
-          gh<_i876.SignInUseCase>(),
-          gh<_i978.RegisterUseCase>(),
-          gh<_i797.SignOutUseCase>(),
         ));
     return this;
   }
