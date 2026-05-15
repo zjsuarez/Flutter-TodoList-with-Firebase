@@ -9,26 +9,25 @@ part 'user_model.g.dart';
 class UserModel with _$UserModel {
   const UserModel._();
 
-  @HiveType(typeId: 0, adapterName: 'UserAdapter')
+  @HiveType(typeId: 1, adapterName: 'UserAdapter')
   const factory UserModel({
     @HiveField(0) required String name,
     @HiveField(1) required String username,
+    @HiveField(2) @Default(true) bool notificationsEnabled,
   }) = _UserModel;
-  factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
-  // ---MAPPERS---
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
 
-  User toDomain() {
-    return User(
-      name: name,
-      username: username,
-    );
-  }
+  User toDomain() => User(
+        name: name,
+        username: username,
+        notificationsEnabled: notificationsEnabled,
+      );
 
-  factory UserModel.fromDomain(User user) {
-    return UserModel(
-      name: user.name,
-      username: user.username,
-    );
-  }
+  factory UserModel.fromDomain(User user) => UserModel(
+        name: user.name,
+        username: user.username,
+        notificationsEnabled: user.notificationsEnabled,
+      );
 }

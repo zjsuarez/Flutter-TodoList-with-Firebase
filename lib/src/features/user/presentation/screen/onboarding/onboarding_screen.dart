@@ -1,24 +1,40 @@
 import 'dart:math';
 
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:todolistfirebase/src/core/constants/app_colors.dart';
+import 'package:todolistfirebase/src/core/di/injection.dart';
+import 'package:todolistfirebase/src/features/user/domain/entities/user.dart';
+import 'package:todolistfirebase/src/features/user/presentation/bloc/user_bloc.dart';
 
 import 'avatar_page.dart';
 import 'name_page.dart';
 import 'notifications_page.dart';
 import 'username_page.dart';
 
-class OnboardingScreen extends StatefulWidget {
+class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
   @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => getIt<UserBloc>(),
+      child: const _OnboardingView(),
+    );
+  }
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _OnboardingView extends StatefulWidget {
+  const _OnboardingView();
+
+  @override
+  State<_OnboardingView> createState() => _OnboardingViewState();
+}
+
+class _OnboardingViewState extends State<_OnboardingView> {
   final _pageController = PageController();
   int _currentPage = 0;
 
@@ -60,7 +76,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (_currentPage == 0 && !_nameFormKey.currentState!.validate()) return;
     if (_currentPage == 1 && !_usernameFormKey.currentState!.validate()) return;
     if (_currentPage == _totalPages - 1) {
-      context.go('/dashboard');
+      final user = User(
+        name: _nameController.text.trim(),
+        username: _usernameController.text.trim(),
+        notificationsEnabled: _notificationsEnabled,
+      );
+      context.read<UserBloc>().add(UserEvent.saveUser(
+        user,
+        pickedImagePath: _selectedImage?.path,
+      ));
       return;
     }
     _pageController.nextPage(
@@ -78,48 +102,63 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(AppColors.backgroundColor),
-      body: SafeArea(
-        child: Column(
-          children: [
-            _ProgressBar(current: _currentPage, total: _totalPages),
-            Expanded(
-              child: PageView(
-                controller: _pageController,
-                physics: const NeverScrollableScrollPhysics(),
-                onPageChanged: (i) => setState(() => _currentPage = i),
-                children: [
-                  NamePage(
-                    controller: _nameController,
-                    formKey: _nameFormKey,
-                  ),
-                  UsernamePage(
-                    controller: _usernameController,
-                    formKey: _usernameFormKey,
-                  ),
-                  AvatarPage(
-                    name: _nameController.text,
-                    selectedImage: _selectedImage,
-                    fallbackColor: _avatarColor,
-                    onImageSelected: (file) =>
-                        setState(() => _selectedImage = file),
-                  ),
-                  NotificationsPage(
-                    enabled: _notificationsEnabled,
-                    onChanged: (v) =>
-                        setState(() => _notificationsEnabled = v),
-                  ),
-                ],
+    return BlocListener<UserBloc, UserState>(
+      listener: (context, state) {
+        state.whenOrNull(
+          saved: () => context.go('/dashboard'),
+          error: (message) => ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(message)),
+          ),
+        );
+      },
+      child: Scaffold(
+        backgroundColor: const Color(AppColors.backgroundColor),
+        body: SafeArea(
+          child: Column(
+            children: [
+              _ProgressBar(current: _currentPage, total: _totalPages),
+              Expanded(
+                child: PageView(
+                  controller: _pageController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  onPageChanged: (i) => setState(() => _currentPage = i),
+                  children: [
+                    NamePage(
+                      controller: _nameController,
+                      formKey: _nameFormKey,
+                    ),
+                    UsernamePage(
+                      controller: _usernameController,
+                      formKey: _usernameFormKey,
+                    ),
+                    AvatarPage(
+                      name: _nameController.text,
+                      selectedImage: _selectedImage,
+                      fallbackColor: _avatarColor,
+                      onImageSelected: (file) =>
+                          setState(() => _selectedImage = file),
+                    ),
+                    NotificationsPage(
+                      enabled: _notificationsEnabled,
+                      onChanged: (v) =>
+                          setState(() => _notificationsEnabled = v),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            _NavButtons(
-              currentPage: _currentPage,
-              totalPages: _totalPages,
-              onNext: _next,
-              onBack: _back,
-            ),
-          ],
+              BlocBuilder<UserBloc, UserState>(
+                builder: (context, state) {
+                  return _NavButtons(
+                    currentPage: _currentPage,
+                    totalPages: _totalPages,
+                    onNext: _next,
+                    onBack: _back,
+                    isLoading: state.maybeWhen(loading: () => true, orElse: () => false),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -165,12 +204,14 @@ class _NavButtons extends StatelessWidget {
     required this.totalPages,
     required this.onNext,
     required this.onBack,
+    required this.isLoading,
   });
 
   final int currentPage;
   final int totalPages;
   final VoidCallback onNext;
   final VoidCallback onBack;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -195,7 +236,7 @@ class _NavButtons extends StatelessWidget {
               if (currentPage > 0) ...[
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: onBack,
+                    onPressed: isLoading ? null : onBack,
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.black,
                       side: const BorderSide(color: Colors.black26),
@@ -211,7 +252,7 @@ class _NavButtons extends StatelessWidget {
               ],
               Expanded(
                 child: ElevatedButton(
-                  onPressed: onNext,
+                  onPressed: isLoading ? null : onNext,
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
                     backgroundColor: Colors.black,
@@ -221,13 +262,22 @@ class _NavButtons extends StatelessWidget {
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 15),
                   ),
-                  child: Text(
-                    isLast ? 'Get Started' : 'Next',
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+                  child: isLoading
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : Text(
+                          isLast ? 'Get Started' : 'Next',
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                 ),
               ),
             ],

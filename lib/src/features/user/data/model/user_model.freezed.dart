@@ -24,6 +24,8 @@ mixin _$UserModel {
   String get name => throw _privateConstructorUsedError;
   @HiveField(1)
   String get username => throw _privateConstructorUsedError;
+  @HiveField(2)
+  bool get notificationsEnabled => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +38,10 @@ abstract class $UserModelCopyWith<$Res> {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
-  $Res call({@HiveField(0) String name, @HiveField(1) String username});
+  $Res call(
+      {@HiveField(0) String name,
+      @HiveField(1) String username,
+      @HiveField(2) bool notificationsEnabled});
 }
 
 /// @nodoc
@@ -54,6 +59,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   $Res call({
     Object? name = null,
     Object? username = null,
+    Object? notificationsEnabled = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -64,6 +70,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
+      notificationsEnabled: null == notificationsEnabled
+          ? _value.notificationsEnabled
+          : notificationsEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -76,7 +86,10 @@ abstract class _$$UserModelImplCopyWith<$Res>
       __$$UserModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@HiveField(0) String name, @HiveField(1) String username});
+  $Res call(
+      {@HiveField(0) String name,
+      @HiveField(1) String username,
+      @HiveField(2) bool notificationsEnabled});
 }
 
 /// @nodoc
@@ -92,6 +105,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? username = null,
+    Object? notificationsEnabled = null,
   }) {
     return _then(_$UserModelImpl(
       name: null == name
@@ -102,16 +116,22 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
+      notificationsEnabled: null == notificationsEnabled
+          ? _value.notificationsEnabled
+          : notificationsEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-@HiveType(typeId: 0, adapterName: 'UserAdapter')
+@HiveType(typeId: 1, adapterName: 'UserAdapter')
 class _$UserModelImpl extends _UserModel {
   const _$UserModelImpl(
-      {@HiveField(0) required this.name, @HiveField(1) required this.username})
+      {@HiveField(0) required this.name,
+      @HiveField(1) required this.username,
+      @HiveField(2) this.notificationsEnabled = true})
       : super._();
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -123,10 +143,14 @@ class _$UserModelImpl extends _UserModel {
   @override
   @HiveField(1)
   final String username;
+  @override
+  @JsonKey()
+  @HiveField(2)
+  final bool notificationsEnabled;
 
   @override
   String toString() {
-    return 'UserModel(name: $name, username: $username)';
+    return 'UserModel(name: $name, username: $username, notificationsEnabled: $notificationsEnabled)';
   }
 
   @override
@@ -136,12 +160,15 @@ class _$UserModelImpl extends _UserModel {
             other is _$UserModelImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.username, username) ||
-                other.username == username));
+                other.username == username) &&
+            (identical(other.notificationsEnabled, notificationsEnabled) ||
+                other.notificationsEnabled == notificationsEnabled));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, username);
+  int get hashCode =>
+      Object.hash(runtimeType, name, username, notificationsEnabled);
 
   @JsonKey(ignore: true)
   @override
@@ -160,7 +187,8 @@ class _$UserModelImpl extends _UserModel {
 abstract class _UserModel extends UserModel {
   const factory _UserModel(
       {@HiveField(0) required final String name,
-      @HiveField(1) required final String username}) = _$UserModelImpl;
+      @HiveField(1) required final String username,
+      @HiveField(2) final bool notificationsEnabled}) = _$UserModelImpl;
   const _UserModel._() : super._();
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
@@ -172,6 +200,9 @@ abstract class _UserModel extends UserModel {
   @override
   @HiveField(1)
   String get username;
+  @override
+  @HiveField(2)
+  bool get notificationsEnabled;
   @override
   @JsonKey(ignore: true)
   _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>

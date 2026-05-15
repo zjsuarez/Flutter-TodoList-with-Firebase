@@ -8,7 +8,7 @@ part of 'user_model.dart';
 
 class UserAdapter extends TypeAdapter<_$UserModelImpl> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
   _$UserModelImpl read(BinaryReader reader) {
@@ -19,17 +19,20 @@ class UserAdapter extends TypeAdapter<_$UserModelImpl> {
     return _$UserModelImpl(
       name: fields[0] as String,
       username: fields[1] as String,
+      notificationsEnabled: fields[2] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$UserModelImpl obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
-      ..write(obj.username);
+      ..write(obj.username)
+      ..writeByte(2)
+      ..write(obj.notificationsEnabled);
   }
 
   @override
@@ -51,10 +54,12 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
     _$UserModelImpl(
       name: json['name'] as String,
       username: json['username'] as String,
+      notificationsEnabled: json['notificationsEnabled'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'username': instance.username,
+      'notificationsEnabled': instance.notificationsEnabled,
     };

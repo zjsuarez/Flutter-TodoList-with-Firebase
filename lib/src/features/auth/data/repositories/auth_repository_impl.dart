@@ -1,5 +1,5 @@
 import 'package:injectable/injectable.dart';
-import 'package:todolistfirebase/src/features/auth/data/data/auth_datasource.dart';
+import 'package:todolistfirebase/src/features/auth/data/datasources/auth_datasource.dart';
 import 'package:todolistfirebase/src/features/auth/domain/repositories/auth_repository.dart';
 
 @LazySingleton(as: AuthRepository)
